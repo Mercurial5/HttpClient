@@ -18,17 +18,17 @@ HttpClient allows you easily make an http requests.
 #include "connection.h"
 
 int main() {
-	std::string host = "google.com";
-	std::string port = "80";
+    std::string host = "google.com";
+    std::string port = "80";
 
-	Connection* connection;	
-	try {
-		connection = new Connection(host, port);
-	} catch (Connection::ConnectionError &e) {
-		std::cout << e.what() << std::endl;
-		return 0;
-	}
-    
+    Connection* connection;	
+    try {
+        connection = new Connection(host, port);
+    } catch (Connection::ConnectionError &e) {
+        std::cout << e.what() << std::endl;
+        return 0;
+    }
+
     std::cout << "Succesfully connected to the server!" << std::endl;
 }
 ```
