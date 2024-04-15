@@ -4,15 +4,15 @@
 #include "url.h"
 #include "connection.h"
 
-Request::Request(URL url) : url(url) {};
-
-std::string Request::send(const std::string message) {
+std::string Request::send(URL url) {
     Connection *connection; 
     try {
         connection = new Connection(url.netloc().host, url.netloc().port);
     } catch (Connection::ConnectionError &e) {
         throw Request::RequestError(e.what());
     }
+    
+    std::string message = Request::build_http_request_message(url);
 
     try {
         connection->send(message);
@@ -27,10 +27,9 @@ std::string Request::send(const std::string message) {
     }
 }
 
-Connection* Request::connect(URL url) {
-    try {
-        return new Connection(url.netloc().host, url.netloc().port);
-    } catch (Connection::ConnectionError &e) {
-        throw Request::RequestError(e.what());
-    }
+std::string Request::build_http_request_message(URL url) {
+    std::string message = "GET " + url.path() + " HTTP/1.1\n\n";
+    message += "host: " + url.netloc().host;
+
+    return message;
 }

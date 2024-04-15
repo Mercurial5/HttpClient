@@ -6,14 +6,10 @@
 #include "connection.h"
 
 class Request {
-    URL url;
-    
-    Connection* connect(URL);
+    static std::string build_http_request_message(URL);
 
     public:
-        Request(URL);
-
-        std::string send(const std::string);
+        static std::string send(URL);
 
         class RequestError : public std::exception {
             std::string message;
