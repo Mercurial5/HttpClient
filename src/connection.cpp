@@ -19,7 +19,7 @@ void Connection::send(const std::string message) {
     if (error == -1) {
         throw Connection::ConnectionError("Failed to write: " + std::string(gai_strerror(errno)));
     }
-    else if (error != message.size() && false) {
+    else if (error != message.size()) {
         throw Connection::ConnectionError("Partially failed to write: " + std::string(gai_strerror(errno)));
     }
 }
