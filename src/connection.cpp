@@ -39,7 +39,7 @@ std::string Connection::read() {
 
         response += response_chunk;
 
-        if (error < READ_CHUNK_SIZE) {
+        if (error == 0) {
             break;
         }
     }
