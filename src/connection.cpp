@@ -10,6 +10,10 @@ Connection::Connection(const std::string host, const std::string port) {
     this->sfd = this->connect(host, port);
 }
 
+Connection::~Connection() {
+    close(this->sfd);
+}
+
 void Connection::send(const std::string message) {
     int error = write(sfd, message.data(), message.size());
     if (error == -1) {

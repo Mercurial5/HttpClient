@@ -14,6 +14,8 @@ class Connection {
     void send(const std::string message);
     std::string read();
 
+    ~Connection();
+
     class ConnectionError : public std::exception {
         std::string message;
 
