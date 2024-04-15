@@ -1,24 +1,20 @@
 #include <iostream>
-#include "connection.h"
+#include <string>
+
+#include "request.h"
+#include "url.h"
+
 
 int main() {
-    std::string host = "google.com";
-    std::string port = "80";
+    URL url("https://dummyapi.io:80/data/v1/");
 
-    Connection* connection;	
-    try {
-        connection = new Connection(host, port);
-    } catch (Connection::ConnectionError &e) {
-        std::cout << e.what() << std::endl;
-        return 0;
-    }
+    std::string message = "GET " + url.path() + " HTTP/1.1\n\n";
+    message += "host: " + url.netloc().host;
 
-    std::string message = "GET / HTTP/1.1\n\nhost: " + host;
+    Request request (url);
+    std::string response = request.send(message);
 
-    connection->send(message);
-    std::string response = connection->read();
-
-    std::cout << "Done" << std::endl;
     std::cout << response << std::endl;
+
     return 0;
 }
