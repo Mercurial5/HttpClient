@@ -11,8 +11,8 @@ int main() {
     Request request(url);
 
     try {
-        std::string response = Client::send(url);
-        std::cout << "Response: " << response << std::endl;
+        std::stringstream response = Client::send(url);
+        std::cout << "Response: " << response.str() << std::endl;
     } catch (Client::ClientError &e) {
         std::cout << e.what() << std::endl;
     }

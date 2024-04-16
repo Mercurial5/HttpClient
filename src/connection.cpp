@@ -3,6 +3,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <errno.h>
+#include <sstream>
 
 #include "connection.h"
 
@@ -24,10 +25,10 @@ void Connection::send(const std::string message) {
     }
 }
 
-std::string Connection::read() {
+std::stringstream Connection::read() {
     shutdown(sfd, SHUT_WR);
 
-    std::string response;
+    std::stringstream response;
     while (true) {
         std::string response_chunk;
         response_chunk.resize(this->READ_CHUNK_SIZE);
@@ -37,7 +38,7 @@ std::string Connection::read() {
             throw Connection::ConnectionError("Failed to read: " + std::string(gai_strerror(errno)));
         }
 
-        response += response_chunk;
+        response << response_chunk;
 
         if (error == 0) {
             break;

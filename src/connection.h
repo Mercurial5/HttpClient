@@ -2,6 +2,7 @@
 
 #include <netdb.h>
 #include <string>
+#include <sstream>
 
 class Connection {
     int READ_CHUNK_SIZE = 1024;
@@ -14,7 +15,7 @@ class Connection {
     Connection(const std::string host, const std::string port);
 
     void send(const std::string message);
-    std::string read();
+    std::stringstream read();
 
     ~Connection();
 

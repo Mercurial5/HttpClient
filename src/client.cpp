@@ -1,11 +1,12 @@
 #include <string>
+#include <sstream>
 
 #include "client.h"
 #include "request.h"
 #include "url.h"
 #include "connection.h"
 
-std::string Client::send(Request request) {
+std::stringstream Client::send(Request request) {
     Connection *connection; 
     try {
         connection = new Connection(request.url().netloc().host, request.url().netloc().port);

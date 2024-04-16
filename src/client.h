@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <map>
 
 #include "url.h"
@@ -9,7 +10,7 @@
 
 class Client {
     public:
-        static std::string send(Request);
+        static std::stringstream send(Request);
 
         class  ClientError: public std::exception {
             std::string message;
