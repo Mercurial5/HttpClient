@@ -1,16 +1,21 @@
 #include <iostream>
 #include <string>
 
+#include "client.h"
 #include "request.h"
 #include "url.h"
 
 
 int main() {
-    URL url("https://dummyapi.io:80/data/v1/");
+    URL url("http://ip-api.com:80/json/");
+    Request request(url);
 
-    std::string response = Request::send(url);
-
-    std::cout << response << std::endl;
+    try {
+        std::string response = Client::send(url);
+        std::cout << "Response: " << response << std::endl;
+    } catch (Client::ClientError &e) {
+        std::cout << e.what() << std::endl;
+    }
 
     return 0;
 }
