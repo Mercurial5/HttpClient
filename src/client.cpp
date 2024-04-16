@@ -34,14 +34,15 @@ std::string Client::send(URL url, std::map<std::string, std::string> headers) {
 }
 
 std::string Client::build_http_request_message(URL url, std::map<std::string, std::string> headers) {
-    headers.merge(Client::DEFAULT_HEADERS);
+    headers.insert(begin(Client::DEFAULT_HEADERS), end(Client::DEFAULT_HEADERS));
+    headers["Host"] = url.netloc().host;
 
     std::string message = "GET " + url.path() + " HTTP/1.1\n";
-    message += "Host: " + url.netloc().host + "\n";
 
     for (auto header: headers) {
         message += header.first + ": " + header.second + "\n";
     }
 
+    message += "\n";
     return message;
 }
