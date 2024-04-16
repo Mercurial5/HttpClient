@@ -1,27 +1,20 @@
 #include <string>
-#include <map>
 
 #include "client.h"
+#include "request.h"
 #include "url.h"
 #include "connection.h"
 
-std::map<std::string, std::string> Client::DEFAULT_HEADERS = {
-    {"User-Agent", "cpp-http-client"},
-};
-
-
-std::string Client::send(URL url, std::map<std::string, std::string> headers) {
+std::string Client::send(Request request) {
     Connection *connection; 
     try {
-        connection = new Connection(url.netloc().host, url.netloc().port);
+        connection = new Connection(request.url().netloc().host, request.url().netloc().port);
     } catch (Connection::ConnectionError &e) {
         throw Client::ClientError(e.what());
     }
     
-    std::string message = Client::build_http_request_message(url, headers);
-
     try {
-        connection->send(message);
+        connection->send(request.http());
     } catch (Connection::ConnectionError &e) {
         throw Client::ClientError(e.what());
     }
@@ -33,16 +26,3 @@ std::string Client::send(URL url, std::map<std::string, std::string> headers) {
     }
 }
 
-std::string Client::build_http_request_message(URL url, std::map<std::string, std::string> headers) {
-    headers.insert(begin(Client::DEFAULT_HEADERS), end(Client::DEFAULT_HEADERS));
-    headers["Host"] = url.netloc().host;
-
-    std::string message = "GET " + url.path() + " HTTP/1.1\n";
-
-    for (auto header: headers) {
-        message += header.first + ": " + header.second + "\n";
-    }
-
-    message += "\n";
-    return message;
-}
