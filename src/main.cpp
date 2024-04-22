@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <sstream>
 
 #include "client.h"
 #include "request.h"
@@ -9,10 +8,9 @@
 
 int main() {
     URL url("http://ip-api.com:80/json/");
-    Request request(url);
 
     try {
-        Response response = Client::send(url);
+        Response response = Client::get(url);
 
         std::cout << "Status code: " << response.status_code << std::endl;
         std::cout << "Headers: " << std::endl;

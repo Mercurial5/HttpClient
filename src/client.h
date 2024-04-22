@@ -11,7 +11,7 @@
 
 class Client {
     public:
-        static Response send(Request);
+        static Response get(Request);
 
         class  ClientError: public std::exception {
             std::string message;

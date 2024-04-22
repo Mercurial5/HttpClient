@@ -7,7 +7,7 @@
 #include "connection.h"
 #include "response.h"
 
-Response Client::send(Request request) {
+Response Client::get(Request request) {
     Connection *connection; 
     try {
         connection = new Connection(request.url().netloc().host, request.url().netloc().port);
