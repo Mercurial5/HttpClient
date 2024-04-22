@@ -12,8 +12,7 @@ int main() {
     Request request(url);
 
     try {
-        std::stringstream response_ss = Client::send(url);
-        Response response(response_ss);
+        Response response = Client::send(url);
 
         std::cout << "Status code: " << response.status_code << std::endl;
         std::cout << "Headers: " << std::endl;
