@@ -5,8 +5,9 @@
 #include "request.h"
 #include "url.h"
 #include "connection.h"
+#include "response.h"
 
-std::stringstream Client::send(Request request) {
+Response Client::send(Request request) {
     Connection *connection; 
     try {
         connection = new Connection(request.url().netloc().host, request.url().netloc().port);
@@ -19,11 +20,14 @@ std::stringstream Client::send(Request request) {
     } catch (Connection::ConnectionError &e) {
         throw Client::ClientError(e.what());
     }
-
+    
+    std::stringstream response_stream;
     try {
-        return connection->read();
+        response_stream = connection->read();
     } catch (Connection::ConnectionError &e) {
         throw Client::ClientError(e.what());
     }
+    
+    return Response(response_stream);
 }
 

@@ -7,10 +7,11 @@
 #include "url.h"
 #include "request.h"
 #include "connection.h"
+#include "response.h"
 
 class Client {
     public:
-        static std::stringstream send(Request);
+        static Response send(Request);
 
         class  ClientError: public std::exception {
             std::string message;
